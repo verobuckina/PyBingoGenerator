@@ -10,10 +10,18 @@ path = './ESC-Bingo-Fields.txt'
 print('------ Bingo Generator ------')
 try: 
     print('Enter number of players: ')
-    count = int(input())
+    try:
+        count = int(input())
+    except ValueError:
+        print("Invalid input. Input has to be an integer.")
+        exit()
 
     print('Enter size of bingo card (i.e. for 5x5 enter 5): ')
-    size =int(input())
+    try:
+        size =int(input())
+    except ValueError:
+        print("Invalid input. Input has to be an integer.")
+        exit()
 
     print('Enter path to txt file with Bingo entrys:')
     path = input()
@@ -23,6 +31,12 @@ try:
         f.close()
 
     list = np.array(list)
+    try:
+        if(list.size < (size*size)):
+            raise ValueError
+    except ValueError:
+        print("To few entrys in file.")
+        exit()
 
     for user in range(count):
         rng = np.random.default_rng()
@@ -40,10 +54,7 @@ try:
         file_name = 'Bingo_nr' + str(user) + '.jpg'
         
         plt.savefig(file_name)
-        
+
 except KeyboardInterrupt:
     print("\nExiting...")
-    exit()
-except ValueError:
-    print("Invalid input. Input has to be an integer.")
     exit()
